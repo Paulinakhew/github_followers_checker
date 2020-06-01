@@ -1,9 +1,18 @@
+import os
 import requests
 
-MAX_ENTRIES_PER_PAGE = 75
+MAX_ENTRIES_PER_PAGE = 100
 
-followers = requests.get(f'https://api.github.com/users/paulinakhew/followers?per_page={MAX_ENTRIES_PER_PAGE}').json()
-following = requests.get(f'https://api.github.com/users/paulinakhew/following?per_page={MAX_ENTRIES_PER_PAGE}').json()
+MY_TOKEN = os.getenv("MY_TOKEN")
+
+followers = requests.get(
+    f'https://api.github.com/users/paulinakhew/followers?per_page={MAX_ENTRIES_PER_PAGE}',
+    {'Authorization': MY_TOKEN}
+).json()
+following = requests.get(
+    f'https://api.github.com/users/paulinakhew/following?per_page={MAX_ENTRIES_PER_PAGE}',
+    {'Authorization': MY_TOKEN}
+).json()
 
 followers_usernames = []
 following_usernames = []
@@ -19,3 +28,5 @@ extra_followers = [x for x in followers_usernames if x not in following_username
 
 print("people that don't follow me back", negative_followers, len(negative_followers))
 print("people I don't follow back", extra_followers, len(extra_followers))
+
+# unfollow users
