@@ -1,13 +1,15 @@
 import json
 import os
 import requests
+from dotenv import load_dotenv
 
 MAX_ENTRIES_PER_PAGE = 100
 USER_TO_FOLLOW = ''  # hardcoded for now
 
-MY_TOKEN = os.getenv('MY_TOKEN')
+load_dotenv()
+MY_TOKEN = os.environ.get("MY_TOKEN")
 
-headers = {'Authorization': MY_TOKEN}
+headers = {'Authorization': 'token ' + MY_TOKEN}
 
 followers = requests.get(
     f'https://api.github.com/users/paulinakhew/followers?per_page={MAX_ENTRIES_PER_PAGE}',
