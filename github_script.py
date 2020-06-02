@@ -5,15 +5,16 @@ from dotenv import load_dotenv
 
 MAX_ENTRIES_PER_PAGE = 100
 
+YOUR_GITHUB_USERNAME = ''
+
 load_dotenv()
 MY_TOKEN = os.environ.get("MY_TOKEN")
-
 headers = {'Authorization': 'token ' + MY_TOKEN}
 
 
 def get_all_followers():
     followers = requests.get(
-        f'https://api.github.com/users/paulinakhew/followers?per_page={MAX_ENTRIES_PER_PAGE}',
+        f'https://api.github.com/users/{YOUR_GITHUB_USERNAME}/followers?per_page={MAX_ENTRIES_PER_PAGE}',
         headers=headers
     ).json()
     return followers
@@ -21,7 +22,7 @@ def get_all_followers():
 
 def get_all_following():
     following = requests.get(
-        f'https://api.github.com/users/paulinakhew/following?per_page={MAX_ENTRIES_PER_PAGE}',
+        f'https://api.github.com/users/{YOUR_GITHUB_USERNAME}/following?per_page={MAX_ENTRIES_PER_PAGE}',
         headers=headers
     ).json()
     return following
