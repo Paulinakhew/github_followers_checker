@@ -1,17 +1,22 @@
+import json
 import os
 import requests
 
 MAX_ENTRIES_PER_PAGE = 100
+USER_TO_FOLLOW = ''  # hardcoded for now
 
 MY_TOKEN = os.getenv("MY_TOKEN")
 
+headers = {"Authorization": f"{MY_TOKEN}"}
+
 followers = requests.get(
     f'https://api.github.com/users/paulinakhew/followers?per_page={MAX_ENTRIES_PER_PAGE}',
-    {'Authorization': MY_TOKEN}
+    headers=headers
 ).json()
+
 following = requests.get(
     f'https://api.github.com/users/paulinakhew/following?per_page={MAX_ENTRIES_PER_PAGE}',
-    {'Authorization': MY_TOKEN}
+    headers=headers
 ).json()
 
 followers_usernames = []
@@ -29,4 +34,14 @@ extra_followers = [x for x in followers_usernames if x not in following_username
 print("people that don't follow me back", negative_followers, len(negative_followers))
 print("people I don't follow back", extra_followers, len(extra_followers))
 
+data = {
+    "Content-Length": 0
+}
+
 # unfollow users
+resp = requests.put(
+    url=f'https://api.github.com/user/following/{USER_TO_FOLLOW}',
+    data=json.dumps(data),
+    headers=headers
+)
+print(resp.json())
