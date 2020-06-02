@@ -5,9 +5,9 @@ import requests
 MAX_ENTRIES_PER_PAGE = 100
 USER_TO_FOLLOW = ''  # hardcoded for now
 
-MY_TOKEN = os.getenv("MY_TOKEN")
+MY_TOKEN = os.getenv('MY_TOKEN')
 
-headers = {"Authorization": f"{MY_TOKEN}"}
+headers = {'Authorization': MY_TOKEN}
 
 followers = requests.get(
     f'https://api.github.com/users/paulinakhew/followers?per_page={MAX_ENTRIES_PER_PAGE}',
