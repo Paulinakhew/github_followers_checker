@@ -45,7 +45,7 @@ def get_follower_groups(followers: list, following: list):
     return negative_followers, extra_followers
 
 
-def hit_unfollow_endpoint(username, headers):
+def hit_follow_endpoint(username, headers):
     data = {"Content-Length": 0}
 
     resp = requests.put(
@@ -56,7 +56,7 @@ def hit_unfollow_endpoint(username, headers):
     return resp
 
 
-def hit_follow_endpoint(username, headers):
+def hit_unfollow_endpoint(username, headers):
     resp = requests.delete(
         url=f'https://api.github.com/user/following/{username}',
         headers=headers
